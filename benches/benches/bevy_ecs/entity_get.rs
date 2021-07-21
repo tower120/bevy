@@ -62,8 +62,8 @@ fn entity_bench(criterion: &mut Criterion){
     // Setup test entities
     for i in 0..ENTITIES_COUNT {
         let mut point_refs = PointEntities { point_entities: [Entity::new(0); POINTS_COUNT]};
+        let point_entity = world.spawn().insert(Point{x: i as u32, y: i as u32 }).id();
         for j in 0..POINTS_COUNT {
-            let point_entity = world.spawn().insert(Point{x: i as u32, y: i as u32 }).id();
             point_refs.point_entities[j] = point_entity;
         }
         world.spawn().insert(point_refs);
@@ -151,7 +151,6 @@ fn arc_mutex_bench(criterion: &mut Criterion){
         let point_arcs = {
             // Create an array of uninitialized values.
             let mut array: [MaybeUninit<Arc<Mutex<Point>>>; POINTS_COUNT] = unsafe { MaybeUninit::uninit().assume_init() };
-
             for (_, element) in array.iter_mut().enumerate() {
                 *element = MaybeUninit::new(foo.clone());
             }
@@ -196,7 +195,6 @@ fn arc_unsafe_bench(criterion: &mut Criterion){
         let point_arcs = {
             // Create an array of uninitialized values.
             let mut array: [MaybeUninit<Arc<Point>>; POINTS_COUNT] = unsafe { MaybeUninit::uninit().assume_init() };
-
             for (_, element) in array.iter_mut().enumerate() {
                 *element = MaybeUninit::new(foo.clone());
             }
