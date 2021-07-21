@@ -22,6 +22,11 @@ path = "benches/bevy_ecs/commands.rs"
 harness = false
 
 [[bench]]
+name = "entity_get"
+path = "benches/bevy_ecs/entity_get.rs"
+harness = false
+
+[[bench]]
 name = "iter"
 path = "benches/bevy_tasks/iter.rs"
 harness = false
