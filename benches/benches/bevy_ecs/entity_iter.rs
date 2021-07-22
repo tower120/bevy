@@ -9,7 +9,8 @@ use criterion::{criterion_group, criterion_main, Criterion};
 criterion_group!(
     benches,
     entity_iter_bench,
-    vec_iter_bench
+    vec_iter_bench,
+    vec_box_iter_bench
 );
 criterion_main!(benches);
 
@@ -61,6 +62,21 @@ fn vec_iter_bench(criterion: &mut Criterion){
 
     // Run systems
     criterion.bench_function("vec iter", |b| b.iter(||
+        for mut point in &mut vec{
+            point.x += 1;
+            point.y += 1;
+        }
+    ));
+}
+
+fn vec_box_iter_bench(criterion: &mut Criterion){
+    let mut vec = Vec::with_capacity(ENTITIES_COUNT);
+    for i in 0..ENTITIES_COUNT {
+        vec.push(Box::new(Point{x: i as u32, y: i as u32 }));
+    }
+
+    // Run systems
+    criterion.bench_function("vec box iter", |b| b.iter(||
         for mut point in &mut vec{
             point.x += 1;
             point.y += 1;
